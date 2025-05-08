@@ -6,6 +6,11 @@ export const getProducts = async (page: number = 1, category?: string) => {
   const query = category ? { category } : {};
 
   const products = await Product.find(query)
+    .populate({
+      path: "reviews",
+      options: { sort: { date: -1 } }, // Sort reviews by date (newest first)
+      select: "author rating comment date", // Only include these fields
+    })
     .sort({ dateAdded: -1 })
     .skip((page - 1) * perPage)
     .limit(perPage)
@@ -56,7 +61,7 @@ export const getProductById = async (id: string) => {
 //   return averageRating;
 // };
 
-export const updateProductRating = async (id: string, data: IProduct) => {
+export const updateProductRating = async (id: string, data?: IProduct) => {
   const updated = await Product.findByIdAndUpdate(
     id,
     { $set: data },

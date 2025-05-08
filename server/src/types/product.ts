@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface IProduct extends Document {
   name: string;
@@ -7,6 +7,7 @@ export interface IProduct extends Document {
   price: number;
   dateAdded: Date;
   averageRating: number;
+  reviews: Types.ObjectId[];
 }
 
 export interface IProductCreateDTO {
@@ -16,7 +17,15 @@ export interface IProductCreateDTO {
   price: number;
 }
 
-export interface IProductUpdateDTO extends Partial<IProductCreateDTO> {}
+export interface IProductUpdateDTO extends Partial<IProductCreateDTO> {
+  product: any;
+  reviews: any[];
+  ratingSummary: {
+    averageRating: number;
+    totalReviews: number;
+    ratingDistribution: number;
+  };
+}
 
 export interface PageResponse<T> {
   data: [];

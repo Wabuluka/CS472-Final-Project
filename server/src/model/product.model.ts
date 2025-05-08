@@ -7,6 +7,7 @@ const productSchema: Schema = new Schema<IProduct>({
   price: { type: Number, required: true },
   dateAdded: { type: Date, default: Date.now },
   averageRating: { type: Number, default: 0, min: 0, max: 5 },
+  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
 });
 
 export const Product = mongoose.model<IProduct>("Product", productSchema);

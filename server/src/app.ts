@@ -5,6 +5,7 @@ import morgan from "morgan";
 import { connectDB } from "./config/db";
 import { PORT } from "./config/env";
 import productRouter from "./routes/product.route";
+import reviewRouter from "./routes/review.route";
 // import reviewRouter from "./routes/review.route";
 
 dotenv.config();
@@ -15,7 +16,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use("/products", productRouter);
-// app.use("/reviews", reviewRouter);
+app.use("/reviews", reviewRouter);
 
 (async (port) => {
   await connectDB();
