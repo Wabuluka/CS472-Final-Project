@@ -20,6 +20,7 @@ npm-debug.log
 /server/node_modules
 /server/package-lock.json
 /server/dist
+/server/src/data/env.ts
 
 # Environment variables
 .env
