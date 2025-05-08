@@ -27,7 +27,7 @@ function Products() {
         <Card className="mt-4">
           <Card.Body>
             <Card.Title className="d-flex justify-content-between">
-              <a>{product.name}</a>
+              <a className="lead">{product.name}</a>
               <p>
                 $ {product.price}.<span className="small">0</span>
               </p>
@@ -39,7 +39,7 @@ function Products() {
           </Card.Body>
           <Card.Footer className="d-flex justify-content-between">
             <span>{moment(product.dateAdded).format("yyyy [ - ] MM")}</span>
-            <span>{product.averageRating}</span>
+            <small className="code">{product.averageRating}</small>
           </Card.Footer>
         </Card>
       </div>
