@@ -27,7 +27,7 @@ function Products() {
         <Card className="mt-4">
           <Card.Body>
             <Card.Title className="d-flex justify-content-between">
-              <a className="lead">{product.name}</a>
+              <h3>{product.name}</h3>
               <p>
                 $ {product.price}.<span className="small">0</span>
               </p>

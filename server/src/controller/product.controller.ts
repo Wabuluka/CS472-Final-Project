@@ -69,7 +69,7 @@ export const updateProductByRating = async (req: Request, res: Response) => {
       });
     }
 
-    await updateProductRating(productId, data);
+    await updateProductRating(productId);
 
     res.status(200).json({ message: "Product Updated" });
   } catch (e: any) {

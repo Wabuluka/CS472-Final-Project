@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <NavbarComponent onClick={() => setModalShow(!modalShow)} />
-      <main>
+      <main style={{ marginTop: "60px" }}>
         <Container>
           <HomePage />
         </Container>

@@ -8,4 +8,8 @@ const reviewSchema: Schema = new Schema<IReview>({
   comment: { type: String, required: true },
   date: { type: Date, default: Date.now },
 });
+
+// reviewSchema.post('save', async function(doc) {
+//   await model('Product').findByIdAndUpdate()
+// })
 export const Review = model<IReview>("Review", reviewSchema);

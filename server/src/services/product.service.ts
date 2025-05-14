@@ -1,5 +1,6 @@
 import { Product } from "../model/product.model";
-import { IProduct } from "../types/product";
+import { Review } from "../model/review.model";
+import { calculateAverageRating } from "../utils/ratings";
 
 export const getProducts = async (page: number = 1, category?: string) => {
   const perPage = 10;
@@ -50,22 +51,22 @@ export const getProductById = async (id: string) => {
   return await Product.findById(id).exec();
 };
 
-// export const updateProductRating = async (productId: string) => {
-//   const reviews = await Review.find({ productId });
-//   const averageRating = calculateAverageRating(reviews);
-//   await Product.findByIdAndUpdate(
-//     productId,
-//     { averageRating },
-//     { new: true }
-//   ).exec();
-//   return averageRating;
-// };
-
-export const updateProductRating = async (id: string, data?: IProduct) => {
-  const updated = await Product.findByIdAndUpdate(
-    id,
-    { $set: data },
-    { new: true, runValidators: true }
-  );
-  if (!updated) throw new Error();
+export const updateProductRating = async (productId: string) => {
+  const reviews = await Review.find({ productId });
+  const averageRating = calculateAverageRating(reviews);
+  await Product.findByIdAndUpdate(
+    productId,
+    { averageRating },
+    { new: true }
+  ).exec();
+  return averageRating;
 };
+
+// export const updateProductRating = async (id: string, data?: IProduct) => {
+//   const updated = await Product.findByIdAndUpdate(
+//     id,
+//     { $set: data },
+//     { new: true, runValidators: true }
+//   );
+//   if (!updated) throw new Error();
+// };
