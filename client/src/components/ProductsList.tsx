@@ -2,6 +2,7 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router";
 import { API_URI } from "../config/env";
 import { IProduct } from "../types/product";
 
@@ -10,7 +11,7 @@ function Products() {
 
   async function getProducts() {
     try {
-      const results = await axios.get(API_URI);
+      const results = await axios.get(`${API_URI}/products`);
       setProducts(results.data.products);
     } catch (e) {
       console.log(e);
@@ -25,21 +26,27 @@ function Products() {
     return (
       <div className="col-sm-12">
         <Card className="mt-4">
-          <Card.Body>
+          <Card.Body className="placeholder-glow">
             <Card.Title className="d-flex justify-content-between">
-              <h3>{product.name}</h3>
-              <p>
-                $ {product.price}.<span className="small">0</span>
-              </p>
+              <h6>
+                <Link className="home-link" to={`/${product._id}`}>
+                  {product.name}
+                </Link>
+              </h6>
+              <span>$ {product.price}</span>
             </Card.Title>
             <Card.Text className="">
               {product.description.slice(0, 100)}
             </Card.Text>
-            {/* <Button variant="primary">Go somewhere</Button> */}
           </Card.Body>
           <Card.Footer className="d-flex justify-content-between">
             <span>{moment(product.dateAdded).format("yyyy [ - ] MM")}</span>
-            <small className="code">{product.averageRating}</small>
+            <div className="d-flex justify-content-end">
+              <small className="code">
+                {`${product.averageRating}`}&nbsp;{""}
+              </small>
+              <span className="badge badge-info">{product?.category}</span>
+            </div>
           </Card.Footer>
         </Card>
       </div>

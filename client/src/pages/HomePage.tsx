@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
-import ProductsList from "../components/ProductsList";
+import Products from "../components/ProductsList";
 function HomePage() {
   return (
-    <div>
-      <div className="row">
-        <div className="col-lg-5">
-          <ProductsList />
+    <div className="container main-container">
+      <div className="split-container">
+        <div className="scrollable-left">
+          <Products />
         </div>
-        <div className="col-lg-7" style={{ width: "560px" }}>
+        <div className="fixed-right">
           <Outlet />
         </div>
       </div>

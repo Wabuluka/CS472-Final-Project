@@ -1,21 +1,23 @@
 import { Field, Form, Formik } from "formik";
 import { useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import { Button } from "react-bootstrap";
+import { Route, Routes } from "react-router";
 import FooterComponent from "./components/FooterComponent";
 import { ModalComponent } from "./components/ModalComponent";
 import NavbarComponent from "./components/NavbarComponent";
 import HomePage from "./pages/HomePage";
+import SingleProduct from "./pages/SingleProduct";
 function App() {
   const [modalShow, setModalShow] = useState(false);
 
   return (
     <>
-      <NavbarComponent onClick={() => setModalShow(!modalShow)} />
-      <main style={{ marginTop: "60px" }}>
-        <Container>
-          <HomePage />
-        </Container>
-      </main>
+      <NavbarComponent onClick={() => setModalShow(!modalShow)} />x
+      <Routes>
+        <Route path="/" element={<HomePage />}>
+          <Route index path="/:id" element={<SingleProduct />} />
+        </Route>
+      </Routes>
       <ModalComponent
         show={modalShow}
         onHide={() => setModalShow(false)}
