@@ -1,4 +1,4 @@
-import { Button, Form, Nav } from "react-bootstrap";
+import { Button, Form, InputGroup, Nav } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 
@@ -10,12 +10,20 @@ function NavbarComponent({ onClick }: { onClick: () => void }) {
         <Navbar.Toggle />
         <Nav className="me-auto">
           <Form className="d-flex">
-            <Form.Control
-              type="search"
-              placeholder="Search"
-              className="me-1"
-              aria-label="Search"
-            />
+            <InputGroup>
+              <Form.Control
+                type="search"
+                placeholder="Search word"
+                className="me-1"
+                aria-label="Search"
+              />
+              <Form.Control
+                type="search"
+                placeholder="Search Category"
+                className="me-1"
+                aria-label="Search"
+              />
+            </InputGroup>
             <Button variant="default">Search</Button>
           </Form>
         </Nav>

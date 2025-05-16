@@ -40,7 +40,10 @@ export const updateReview = async (
   return updateReview;
 };
 
-export const deleteReview = async (reviewId: string, productId: string) => {
+export const deleteProductReview = async (
+  reviewId: string,
+  productId: string
+) => {
   const deleteReview = await Review.findByIdAndDelete(reviewId).exec();
   if (deleteReview) {
     await updateProductRating(productId);

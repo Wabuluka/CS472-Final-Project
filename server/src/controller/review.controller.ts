@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { createReview, getReviewsByProduct } from "../services/review.service";
+import {
+  createReview,
+  deleteProductReview,
+  getReviewsByProduct,
+} from "../services/review.service";
 
 export const getProductReview = async (req: Request, res: Response) => {
   try {
@@ -21,5 +25,16 @@ export const addReview = async (req: Request, res: Response) => {
     res.status(201).json(review);
   } catch (e) {
     res.status(500).json({ message: "Error adding a review:", e });
+  }
+};
+
+export const deleteReview = async (req: Request, res: Response) => {
+  try {
+    const { reviewId, productId } = req.body;
+    // console.log(reviewId, productId);
+    await deleteProductReview(reviewId, productId);
+    res.status(200).json({ message: "deleted" });
+  } catch (e: any) {
+    res.status(500).json({ message: "Error getting product reviews: ", e });
   }
 };
