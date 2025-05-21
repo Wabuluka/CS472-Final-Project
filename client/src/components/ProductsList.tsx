@@ -1,27 +1,12 @@
-import axios from "axios";
 import moment from "moment";
-import { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { Link } from "react-router";
-import { API_URI } from "../config/env";
+import { useApplicationContext } from "../context/AppContext";
 import { IProduct } from "../types/product";
 import { RatingDisplay } from "./RatingDisplay";
 
 function Products() {
-  const [products, setProducts] = useState([]);
-
-  async function getProducts() {
-    try {
-      const results = await axios.get(`${API_URI}/products`);
-      setProducts(results.data.products);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  useEffect(() => {
-    getProducts();
-  }, []);
+  const { products } = useApplicationContext() as { products: IProduct[] };
 
   const ProductCard = ({ product }: { product: IProduct }) => {
     return (

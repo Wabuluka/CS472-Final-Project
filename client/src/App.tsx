@@ -1,14 +1,26 @@
 import { Field, Form, Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { Route, Routes } from "react-router";
 import FooterComponent from "./components/FooterComponent";
 import { ModalComponent } from "./components/ModalComponent";
 import NavbarComponent from "./components/NavbarComponent";
+import { API_URI } from "./config/env";
+import { useApplicationContext } from "./context/AppContext";
 import HomePage from "./pages/HomePage";
 import SingleProduct from "./pages/SingleProduct";
+
 function App() {
   const [modalShow, setModalShow] = useState(false);
+  const { getProducts } = useApplicationContext();
+
+  async function fetchProducts(url: string) {
+    await getProducts(url);
+  }
+
+  useEffect(() => {
+    fetchProducts(`${API_URI}/products/search?q=`);
+  }, []);
 
   return (
     <>

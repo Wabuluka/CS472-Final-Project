@@ -10,6 +10,8 @@ import { IReview } from "../types/review";
 
 export default function SingleProduct() {
   const [reviews, setReviews] = useState<IReview[]>([]);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [currentReview, setCurrentReview] = useState("");
   const { id } = useParams();
 
   useEffect(() => {
@@ -22,13 +24,9 @@ export default function SingleProduct() {
 
   async function handleReviewSubmit(values: IReview) {
     try {
-      const review = await axios.post(
-        `${API_URI}/reviews/${id}/reviews`,
-        values
-      );
-      console.log(review);
+      await axios.post(`${API_URI}/reviews/${id}/reviews`, values);
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   }
 
@@ -39,6 +37,21 @@ export default function SingleProduct() {
         productId: id,
       };
       await axios.delete(`${API_URI}/reviews/reviews`, { data: values });
+    } catch (error) {
+      alert(error);
+    }
+  }
+
+  function setToUpdating(id: string, values?: string) {
+    try {
+      if (!isUpdating) {
+        setIsUpdating(!isUpdating);
+        setCurrentReview(id);
+      } else {
+        console.log(values);
+        setIsUpdating(!isUpdating);
+        setCurrentReview("");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -66,7 +79,6 @@ export default function SingleProduct() {
                 <div className="col-lg-6">
                   <label htmlFor="title">Rating out 5</label>
                   <Field as="select" name="rating" className="form-control">
-                    <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -111,12 +123,35 @@ export default function SingleProduct() {
                   </div>
                   <p>{moment(review?.date).format("yyyy [-] MM")}</p>
                 </div>
-                <div className="card-body">{review.comment}</div>
+                {isUpdating && currentReview === review._id ? (
+                  <div className="card-body">
+                    <Formik
+                      initialValues={{ comment: review.comment }}
+                      onSubmit={() => console.log("Hello")}
+                    >
+                      <Form>
+                        <div className="col-sm-12 mt-2">
+                          <Field
+                            id="comment"
+                            name="comment"
+                            placeholder="Comment"
+                            className="form-control"
+                            as="textarea"
+                          />
+                        </div>
+                      </Form>
+                    </Formik>
+                  </div>
+                ) : (
+                  <div className="card-body">{review.comment}</div>
+                )}
+
                 <Card.Footer>
                   <button
                     type="button"
                     className="btn danger"
                     style={{ color: "gray" }}
+                    onClick={() => review._id && setToUpdating(review._id)}
                   >
                     Update
                   </button>

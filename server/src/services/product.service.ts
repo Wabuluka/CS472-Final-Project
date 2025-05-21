@@ -42,8 +42,16 @@ export const addProduct = async (
 };
 
 export const searchProducts = async (query: string) => {
+  if (!query) {
+    // Fetch all products if query is empty
+    return await Product.find().exec();
+  }
+
   return await Product.find({
-    name: { $regex: query, $options: "i" },
+    $or: [
+      { name: { $regex: query, $options: "i" } },
+      { category: { $regex: query, $options: "i" } },
+    ],
   }).exec();
 };
 
@@ -61,12 +69,3 @@ export const updateProductRating = async (productId: string) => {
   ).exec();
   return averageRating;
 };
-
-// export const updateProductRating = async (id: string, data?: IProduct) => {
-//   const updated = await Product.findByIdAndUpdate(
-//     id,
-//     { $set: data },
-//     { new: true, runValidators: true }
-//   );
-//   if (!updated) throw new Error();
-// };

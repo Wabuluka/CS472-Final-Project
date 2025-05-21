@@ -31,7 +31,6 @@ export const addReview = async (req: Request, res: Response) => {
 export const deleteReview = async (req: Request, res: Response) => {
   try {
     const { reviewId, productId } = req.body;
-    // console.log(reviewId, productId);
     await deleteProductReview(reviewId, productId);
     res.status(200).json({ message: "deleted" });
   } catch (e: any) {

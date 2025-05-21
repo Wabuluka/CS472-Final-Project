@@ -32,7 +32,8 @@ export const createProduct = async (req: Request, res: Response) => {
 export const searchProductsByName = async (req: Request, res: Response) => {
   try {
     const query = req.query.q as string;
-    if (!query) res.status(400).json({ message: "No query submitted" });
+    console.log(query);
+    // if (!query) res.status(400).json({ message: "No query submitted" });
     const products = await searchProducts(query);
     if (products.length === 0)
       res.status(404).json({ message: `No results for: ${query}` });
