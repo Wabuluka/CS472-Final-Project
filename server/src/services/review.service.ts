@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Review } from "../model/review.model";
 import { updateProductRating } from "./product.service";
 
@@ -27,17 +28,30 @@ export const createReview = async (
 };
 
 export const updateReview = async (
-  reviewId: string,
   productId: string,
-  updates: Partial<{ rating: number; comment: string }>
+  reviewId: string,
+  updates: Partial<{ comment: string }>
 ) => {
-  const updatedReview = await Review.findByIdAndUpdate(reviewId, updates, {
-    new: true,
-  }).exec();
-  if (!updatedReview) {
-    await updateProductRating(productId);
+  try {
+    console.log("Updating review with ID:", reviewId);
+    const existingReview = await Review.findById(reviewId);
+    if (!existingReview) {
+      console.log("No review found with this ID");
+    }
+    const updatedReview = await Review.findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(reviewId) },
+      { $set: { comment: updates.comment } },
+      { new: true }
+    ).exec();
+
+    if (updatedReview) {
+      await updateProductRating(productId);
+    }
+
+    return updatedReview;
+  } catch (error) {
+    console.log(error);
   }
-  return updateReview;
 };
 
 export const deleteProductReview = async (

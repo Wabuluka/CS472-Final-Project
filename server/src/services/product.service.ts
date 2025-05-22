@@ -43,7 +43,6 @@ export const addProduct = async (
 
 export const searchProducts = async (query: string) => {
   if (!query) {
-    // Fetch all products if query is empty
     return await Product.find().exec();
   }
 

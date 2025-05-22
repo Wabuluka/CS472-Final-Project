@@ -57,6 +57,21 @@ export default function SingleProduct() {
     }
   }
 
+  async function onUpdateComment(
+    values: { comment: string },
+    reviewId: string
+  ) {
+    try {
+      const result = await axios.put(
+        `${API_URI}/reviews/${id}/reviews/${reviewId}`,
+        values
+      );
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <div className="row mb-5">
@@ -127,25 +142,27 @@ export default function SingleProduct() {
                   <div className="card-body">
                     <Formik
                       initialValues={{ comment: review.comment }}
-                      onSubmit={() => console.log("Hello")}
+                      onSubmit={(values) => onUpdateComment(values, review._id)}
                     >
-                      <Form>
-                        <div className="col-sm-12 mt-2">
-                          <Field
-                            id="comment"
-                            name="comment"
-                            placeholder="Comment"
-                            className="form-control"
-                            as="textarea"
-                          />
-                        </div>
-                      </Form>
+                      {({ isSubmitting }) => (
+                        <Form>
+                          <div className="col-sm-12 mt-2">
+                            <Field
+                              id="comment"
+                              name="comment"
+                              placeholder="Comment"
+                              className="form-control"
+                              as="textarea"
+                            />
+                          </div>
+                          <button type="submit">Update Comment</button>
+                        </Form>
+                      )}
                     </Formik>
                   </div>
                 ) : (
                   <div className="card-body">{review.comment}</div>
                 )}
-
                 <Card.Footer>
                   <button
                     type="button"

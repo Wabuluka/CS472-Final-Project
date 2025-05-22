@@ -3,6 +3,7 @@ import {
   createReview,
   deleteProductReview,
   getReviewsByProduct,
+  updateReview,
 } from "../services/review.service";
 
 export const getProductReview = async (req: Request, res: Response) => {
@@ -35,5 +36,18 @@ export const deleteReview = async (req: Request, res: Response) => {
     res.status(200).json({ message: "deleted" });
   } catch (e: any) {
     res.status(500).json({ message: "Error getting product reviews: ", e });
+  }
+};
+
+export const updateProductReview = async (req: Request, res: Response) => {
+  try {
+    const { productId, reviewId } = req.params;
+    let result = await updateReview(productId, reviewId, req.body);
+    console.log(result);
+    res.status(200).json({ message: "Comment updated", result });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating product reviews: ", error });
   }
 };

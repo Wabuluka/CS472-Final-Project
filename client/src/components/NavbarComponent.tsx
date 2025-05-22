@@ -14,6 +14,7 @@ function NavbarComponent({ onClick }: { onClick: () => void }) {
       await getProducts(url);
     }
   }
+
   return (
     <Navbar className="bg-body-tertiary fixed-top">
       <Container>

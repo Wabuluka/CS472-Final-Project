@@ -12,7 +12,7 @@ import SingleProduct from "./pages/SingleProduct";
 
 function App() {
   const [modalShow, setModalShow] = useState(false);
-  const { getProducts } = useApplicationContext();
+  const { getProducts, addProduct } = useApplicationContext();
 
   async function fetchProducts(url: string) {
     await getProducts(url);
@@ -21,6 +21,14 @@ function App() {
   useEffect(() => {
     fetchProducts(`${API_URI}/products/search?q=`);
   }, []);
+
+  async function handleAddProduct(values) {
+    try {
+      await addProduct(values);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <>
@@ -37,14 +45,14 @@ function App() {
       >
         <div>
           <Formik
-            initialValues={{ title: "", price: "", category: "" }}
-            onSubmit={(values) => console.log("Done", values)}
+            initialValues={{ name: "", price: "", category: "" }}
+            onSubmit={(values) => handleAddProduct(values)}
           >
             <Form>
               <label htmlFor="title">Product Title</label>
               <Field
                 id="title"
-                name="title"
+                name="name"
                 placeholder="Title"
                 className="form-control"
               />
